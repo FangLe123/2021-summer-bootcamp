@@ -84,6 +84,7 @@ assert not xor(False, False)
 # Q6. Write a Python program to display the current date and time under standard ISO 8601. e.g. 2021-12-03T10:15:30Z
 
 def get_current_time() -> str:
+
     import datetime
 
     return datetime.datetime.now().isoformat()
@@ -102,3 +103,4 @@ def sum1(x,y):
         return 20
     else:
         return x+y
+
