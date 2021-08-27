@@ -37,35 +37,21 @@ assert cross_product([1, 2, 0], [4, 5, 6]) == [12, -6, -3]
  return a list of True or False.
 checkOrders(["()", "(", "{}[]", "[][][]", "[{]{]"] return [True, False, True, True, False]
 """
-def check_orders(orders:[str])-> [bool]:
-    bool_list = []
-    for i in orders:
-        if i == "":
-        bool_list.append('False')
-        stack = []
-        while i != "":
-            a = orders[0]
-            i = i[1:]
-            if a == "(" or a == "{" or a == "[":
-                stack.append(a)
-            elif a == ")" or a == "}" or a == "]":
-                len_stack = len(stack)
-                if len_stack == 0:
-                   bool_list.append('False')
-                else:
-                    if a == ")" and stack[len_stack - 1] == "(":
-                        stack.pop(len_stack - 1)
-                    elif a == "]" and stack[len_stack - 1 ] == "[":
-                        stack.pop(len_stack - 1)
-                    elif a == "}" and stack[len_stack - 1 ] == "{":
-                        stack.pop(len_stack - 1)
-                    else:
-                        bool_list.append('False')
-        if stack ==[]:
-            bool_list.append('True')
+
+def check_orders(orders: [str]) -> [bool]:
+    patterns = {")": "(", "}": "{", "]": "["}  # reverse look up
+    return [check_order(o, patterns) for o in orders]
+
+
+def check_order(order: str, patterns: {str: str}) -> bool:
+    stack = []
+    for c in order:
+        if c in patterns:
+            if len(stack) == 0 or stack.pop() != patterns[c]:
+                return False
         else:
-            bool_list.append('False')
-    return bool_list
+            stack.append(c)
+    return len(stack) == 0
 
 
 
@@ -120,10 +106,9 @@ def judgeRobotMove(moves: str) -> bool:
 
 可以使用regex或者python标准包的方法。
 """
-import re
 
-def validateEmail(email):
-
-    if re.match(r'[0-9-/._a-z]+@[0-9-/._a-z]+\.(com|edu)', email) != None:
-            return 1
-    return 0
+def check_email(email: str) -> bool:
+    import re
+    pattern = r"[-/.0-9_a-z]+@[-/.0-9_a-z]*\.(com|edu)"
+    m = re.match(pattern, email)
+    return m is not None

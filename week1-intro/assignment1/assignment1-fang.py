@@ -8,13 +8,13 @@
 
 def factorial(x: int) -> int:
     a = 1
-    if x < 0 :
-        return 'no solution'
-    elif x == 0 :
+    if x < 0:
+        return -1
+    elif x == 0:
         return 1
-    else :
-        for i in range(1,x+1):
-            a=a*i
+    else:
+        for i in range(1, x+1):
+            a = a * i
         return a
 
 
@@ -38,16 +38,9 @@ assert print_sum(5) == "15"
 # Q3. Write a program to check is a year is leap year (x is always > 0)
 
 def is_leap_year(year: int) -> bool:
-    if (year % 400) == 0:
+    if year % 4 == 0 and year % 100 != 0 or year % 400 ==0:
         return True
-    else:
-        if (year % 100) == 0:
-            return False
-        else:
-            if (year % 4) == 0:
-                return True
-            else:
-                return False
+    return False
 
 
 assert is_leap_year(2000)
@@ -84,10 +77,8 @@ assert not xor(False, False)
 # Q6. Write a Python program to display the current date and time under standard ISO 8601. e.g. 2021-12-03T10:15:30Z
 
 def get_current_time() -> str:
-
-    import datetime
-
-    return datetime.datetime.now().isoformat()
+    from datetime import datetime
+    return datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 

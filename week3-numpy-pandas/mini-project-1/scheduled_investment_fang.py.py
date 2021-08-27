@@ -44,8 +44,8 @@ def calculate_scheduled_investment(data: pd.DataFrame) -> ():
         #   如果不购买，append前日仓位和花费
         #   然后总需要根据open_price计算asset, 并且加入assets
         if is_monday(date):
-            positions.append(positions[-1] +10)
-            cost.append(cost[-1] + 10*open_price)
+            positions.append(positions[-1] + shares)
+            cost.append(cost[-1] + shares*open_price)
 
         else:
             positions.append(positions[-1])
@@ -72,7 +72,7 @@ def export_result() -> float:
     data['Positions'] = positions
     data['Cost'] = cost
     data['assets'] = assets
-    write_data(data,ANALYSIS_RESULT_DATA_NAME )
+    write_data(data,)
 
     return annual_return(10, assets[-1] / cost[-1])  # 10 years
 
