@@ -9,8 +9,8 @@ def get_rate(client_id):
     # Sample code for getting http response. Need to edit
     import requests
     response = requests.get("http://127.0.0.1:5000/rate/" + client_id)
-    print(response)
-    return response.content
+    return float(response.content)
+
     # Sample end
 # -- TODO END: Part 2
 
@@ -19,7 +19,8 @@ def get_rate(client_id):
 def upsert_client_rate(client_id, rate):
     # call http post - http post call to 127.0.0.1:5000/rate
     import requests
-    response = requests.post("http://127.0.0.1:5000/rate", json={"client_id": 1})  # what to post?
+    response = requests.post("http://127.0.0.1:5000/rate", json={"client_id": {'rate':rate}})  # what to post?
+
     # https://requests.readthedocs.io/en/master/user/quickstart/
 # -- TODO END: Part 5
 

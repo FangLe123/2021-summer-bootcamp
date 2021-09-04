@@ -29,6 +29,7 @@ def get_client_rates():
     import pandas as pd
     df = pd.read_json("client_rate.json")
     return df.to_dict()
+print(get_client_rates())
 # -- DO NOT EDIT END
 
 
@@ -43,7 +44,10 @@ def get_client_rate(client_id):
     :return: http response
     """
     # How to get the actual rate from client_id?
-    return client_id
+    client_dict = get_client_rates()
+    if client_id in client_dict:
+        return str(client_dict[client_id]['rate'])
+    return client_id + ' is not found'
 # -- TODO END: Part 1
 
 
@@ -57,11 +61,14 @@ def upsert_client_rate():
     """
     # We want to update if the client exist in the client_rate.json data
     # Or insert a new client-rate pair into client_rate.json data
-    print(request)
+
 
     # After getting post request - how to update json file?
+    json_dict = request.get_json()
+    list_key = json_dict.keys()
+    list_value = json_dict.values()
+    update_client_rates(list_key[0], list_value[0])
     return request.get_json()
-
 
 def update_client_rates(client_id, rate):
     """
@@ -74,7 +81,12 @@ def update_client_rates(client_id, rate):
     # check if exist
     # replace or add client rate
     # re-write the file
-    pass
+    client_dict = get_client_rates()
+    if client_id in client_dict:
+        client_dict[client_id]['rate'] = rate
+    else:
+        client_dict.append(client_id,{'rate':rate})
+    id_rate_dict.to_json("client_rate.json")
 # -- TODO END: Part 4
 
 
